@@ -19,10 +19,6 @@ packages:
       - 1password
       - 1password-cli
   linux:
-    scripts:
-      - name: fnm
-        test: fnm --version
-        cmd: curl -fsSL https://fnm.vercel.app/install | bash
     apt:
       - git
       - jq
@@ -32,6 +28,10 @@ packages:
       - build-essential
       - wget
       - unzip
+    scripts:
+      - name: fnm
+        test: fnm --version
+        cmd: curl -fsSL https://fnm.vercel.app/install | bash
     privileged:
       - name: eza
         test: eza --version
