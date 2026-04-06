@@ -1,0 +1,14 @@
+{{ if and (eq .chezmoi.os "linux") .privileged -}}
+#!/bin/bash
+set -euo pipefail
+
+sudo apt update
+sudo apt install -y {{ range .packages.linux.apt }}{{ . | quote }} {{ end }}
+
+{{ range .packages.linux.privileged -}}
+if ! {{ .test }} &>/dev/null; then
+  echo "==> Installing {{ .name }}..."
+  {{ .cmd }}
+fi
+{{ end -}}
+{{ end -}}

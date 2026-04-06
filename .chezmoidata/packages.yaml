@@ -1,8 +1,14 @@
 packages:
+  universal:
+    scripts:
+      - name: chezmoi
+        test: chezmoi --version
+        cmd: sh -c "$(curl -fsLS get.chezmoi.io)"
+      - name: starship
+        test: starship --version
+        cmd: sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
   darwin:
     brews:
-      - chezmoi
-      - starship
       - fnm
       - uv
       - jq
@@ -13,6 +19,10 @@ packages:
       - 1password
       - 1password-cli
   linux:
+    scripts:
+      - name: fnm
+        test: fnm --version
+        cmd: curl -fsSL https://fnm.vercel.app/install | bash
     apt:
       - git
       - jq
@@ -21,18 +31,8 @@ packages:
       - curl
       - build-essential
       - wget
-      - apt
       - unzip
-    scripts:
-      - name: chezmoi
-        test: chezmoi --version
-        cmd: sh -c "$(curl -fsLS get.chezmoi.io)"
-      - name: starship
-        test: starship --version
-        cmd: sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
-      - name: fnm
-        test: fnm --version
-        cmd: curl -fsSL https://fnm.vercel.app/install | bash
+    privileged:
       - name: eza
         test: eza --version
         cmd: |

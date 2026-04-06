@@ -1,0 +1,12 @@
+{{ if ne .chezmoi.os "windows" -}}
+#!/bin/bash
+set -euo pipefail
+
+{{ range .packages.universal.scripts -}}
+if ! {{ .test }} &>/dev/null; then
+  echo "==> Installing {{ .name }}..."
+  {{ .cmd }}
+fi
+{{ end -}}
+
+{{ end -}}

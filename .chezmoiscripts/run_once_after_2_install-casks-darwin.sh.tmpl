@@ -1,0 +1,10 @@
+{{ if and (eq .chezmoi.os "darwin") .privileged -}}
+#!/bin/bash
+set -euo pipefail
+
+brew bundle --no-lock --file=/dev/stdin <<EOF
+{{ range .packages.darwin.casks -}}
+cask {{ . | quote }}
+{{ end -}}
+EOF
+{{ end -}}

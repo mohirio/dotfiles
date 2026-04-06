@@ -3,6 +3,7 @@
 
 {{ $identity    := promptChoiceOnce . "identity" "identity" $identityChoices -}}
 {{ $environment := promptChoiceOnce . "environment" "environment" $envChoices -}}
+{{ $privileged  := promptBoolOnce   . "privileged" "privileged (sudo/admin access)" -}}
 {{ $uname       := promptStringOnce . "uname"    "username"                  -}}
 {{ $gitName     := promptStringOnce . "gitName"  "git name"                  -}}
 {{ $gitEmail    := promptStringOnce . "gitEmail" "git email"                 -}}
@@ -15,3 +16,4 @@
   gitName     = {{ $gitName | quote }}
   gitEmail    = {{ $gitEmail | quote }}
   environment = {{ $environment | quote }}
+  privileged  = {{ $privileged }}

@@ -1,4 +1,4 @@
-{{ if eq .chezmoi.os "darwin" -}}
+{{ if and (eq .chezmoi.os "darwin") .privileged -}}
 #!/bin/bash
 set -euo pipefail
 
@@ -12,7 +12,6 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 15
 
 # Touchpad
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
-
 
 # Dock
 defaults write com.apple.dock autohide -bool true
