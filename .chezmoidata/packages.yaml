@@ -1,0 +1,58 @@
+packages:
+  darwin:
+    brews:
+      - chezmoi
+      - starship
+      - fnm
+      - uv
+      - jq
+      - eza
+      - gh
+    casks:
+      - iterm2
+      - 1password
+      - 1password-cli
+  linux:
+    apt:
+      - git
+      - jq
+      - tree
+      - zsh
+      - curl
+      - build-essential
+      - wget
+      - apt
+      - unzip
+    scripts:
+      - name: chezmoi
+        test: chezmoi --version
+        cmd: sh -c "$(curl -fsLS get.chezmoi.io)"
+      - name: starship
+        test: starship --version
+        cmd: sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
+      - name: fnm
+        test: fnm --version
+        cmd: curl -fsSL https://fnm.vercel.app/install | bash
+      - name: eza
+        test: eza --version
+        cmd: |
+          mkdir -p /etc/apt/keyrings
+          wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+          echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | tee /etc/apt/sources.list.d/gierens.list
+          chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+          apt update
+          apt install -y eza
+  windows:
+    packages:
+      - Microsoft.WindowsTerminal
+      - Microsoft.VisualStudioCode
+      - Git.Git
+      - Schniz.fnm
+      - astral-sh.uv
+      - Starship.Starship
+      - JanDeDobbeleer.OhMyPosh
+      - Docker.DockerDesktop
+      - AgileBits.1Password
+      - AgileBits.1Password.CLI
+      - GitHub.cli
+      - jqlang.jq

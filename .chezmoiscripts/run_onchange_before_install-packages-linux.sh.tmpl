@@ -1,0 +1,14 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+set -euo pipefail
+
+apt update
+apt install -y {{ range .packages.linux.apt }}{{ . | quote }} {{ end }}
+
+{{ range .packages.linux.scripts -}}
+if ! {{ .test }} &>/dev/null; then
+  echo "==> Installing {{ .name }}..."
+  {{ .cmd }}
+fi
+{{ end -}}
+{{ end -}}

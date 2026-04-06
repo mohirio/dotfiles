@@ -1,0 +1,17 @@
+{{ $identityChoices := list "personal" "work" "agent" -}}
+{{ $envChoices      := list "local" "container" -}}
+
+{{ $identity    := promptChoiceOnce . "identity" "identity" $identityChoices -}}
+{{ $environment := promptChoiceOnce . "environment" "environment" $envChoices -}}
+{{ $uname       := promptStringOnce . "uname"    "username"                  -}}
+{{ $gitName     := promptStringOnce . "gitName"  "git name"                  -}}
+{{ $gitEmail    := promptStringOnce . "gitEmail" "git email"                 -}}
+
+
+
+[data]
+  identity    = {{ $identity | quote }}
+  uname       = {{ $uname | quote }}
+  gitName     = {{ $gitName | quote }}
+  gitEmail    = {{ $gitEmail | quote }}
+  environment = {{ $environment | quote }}
