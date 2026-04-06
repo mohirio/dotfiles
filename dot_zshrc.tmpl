@@ -71,12 +71,14 @@ PERL_MB_OPT="--install_base \"/Users/{{ .uname }}/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/Users/{{ .uname }}/perl5"; export PERL_MM_OPT;
 export PATH="$HOME/.local/bin:$PATH"
 
+{{ if ne .environment "container" -}}
 # Docker
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=(/Users/{{ .uname }}/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
+{{ end -}}
 
 {{ if eq .environment "container" -}}
 PROMPT="${PROMPT}"$'\n'
