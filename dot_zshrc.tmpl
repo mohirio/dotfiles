@@ -1,19 +1,24 @@
+{{ $os := .chezmoi.os -}}
+{{ $environment := .environment -}}
 export ZSH=$HOME/.oh-my-zsh
 export TERM=xterm-256color
-export HOMEBREW_NO_ANALYTICS=1
 export LANG=en_US.UTF-8
 export LC_ALL=$LANG
+{{ if eq $os "darwin" -}}
+export HOMEBREW_NO_ANALYTICS=1
+{{ end -}}
 
 plugins=(
   docker
   git
-  brew
+  {{ if eq $os "darwin" -}}brew{{ end }}
   common-aliases
   zsh-autosuggestions
   zsh-syntax-highlighting
   zsh-completions
 )
 
+ZSH_CACHE_DIR="${HOME}/.cache/zsh/"
 ZSH_COMPDUMP="${HOME}/.cache/zsh/.zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
 
 # Create parent directory if not exists
@@ -39,6 +44,13 @@ ZSH_HIGHLIGHT_STYLES[path]=none
 ZSH_HIGHLIGHT_STYLES[path_prefix]=none
 ZSH_HIGHLIGHT_STYLES[cursor]="bg-blue"
 
+# Aliases
+source ~/.aliases
+
+# Starship
+export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
+eval "$(starship init zsh)"
+
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -55,15 +67,12 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-# Poetry
-# export PATH="$HOME/.poetry/bin:$PATH"
-
-# Aliases
-source ~/.aliases
-
-# Starship
-export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
-eval "$(starship init zsh)"
+# fnm
+FNM_PATH="/root/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "$(fnm env --shell bash)"
+fi
 
 PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
@@ -72,7 +81,7 @@ PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
 export PATH="$HOME/.local/bin:$PATH"
 
-{{ if ne .environment "container" -}}
+{{ if ne $environment "container" -}}
 # Docker
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=($HOME/.docker/completions $fpath)
@@ -81,6 +90,6 @@ compinit
 # End of Docker CLI completions
 {{ end -}}
 
-{{ if eq .environment "container" -}}
+{{ if eq $environment "container" -}}
 PROMPT="${PROMPT}"$'\n'
 {{ end -}}
