@@ -14,7 +14,7 @@ alias lg3="git log --graph --abbrev-commit --decorate \
 alias rmpy='find . | grep -E "(__pycache__|\*.pyc" | xargs rm -r'
 alias rmdsstore='find . -name ".DS_Store" -delete'
 alias la="ls -lah"
-{{ if eq .priviliged "true" -}}
+{{ if eq .privileged "true" -}}
 alias ls="eza --long --git --all --icons --group-directories-first"
 alias tree="eza --tree"
 {{ end -}}
