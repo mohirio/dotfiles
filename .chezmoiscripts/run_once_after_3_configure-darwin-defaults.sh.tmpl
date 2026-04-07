@@ -4,7 +4,7 @@ set -euo pipefail
 
 # iTerm2 — load prefs from chezmoi-managed folder
 defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
-defaults write com.googlecode.iterm2 PrefsCustomFolder -string "${HOME}/.iterm2"
+defaults write com.googlecode.iterm2 PrefsCustomFolder -string "${HOME}/.config/iterm2"
 
 # Keyboard
 defaults write NSGlobalDomain KeyRepeat -int 2

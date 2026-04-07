@@ -1,13 +1,9 @@
+{{ $os := .chezmoi.os -}}
 README.md
 LICENSE
 .github
-
-{{ if eq .chezmoi.os "windows" }}
-.zshrc
-{{ end }}
-
-{{ if ne .chezmoi.os "windows" }}
-.config/powershell
-{{ end }}
-
 .oh-my-zsh/cache
+
+{{ if eq $os "windows" }}.zshrc{{ end }}
+{{ if ne $os "windows" }}.config/powershell{{ end }}
+{{ if ne $os "darwin" }}.config/iterm2{{ end }}
